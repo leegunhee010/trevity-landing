@@ -144,11 +144,32 @@
   </div>
 
   <script>
-    /* 제출 성공 후 돌아올 thank-you 주소를 현재 배포 경로 기준으로 자동 설정
-       (GitHub Pages 하위경로/로컬/커스텀도메인 모두 대응) */
+    /* =========================================================
+       신청 저장 위치
+       - SHEET_ENDPOINT 가 비어 있으면 → 이메일(formsubmit)로 전송
+       - Apps Script 웹앱 URL(.../exec)을 넣으면 → 구글 시트에 자동저장
+         (google-apps-script/Code.gs 참고, 배포 후 URL 붙여넣기)
+       ========================================================= */
+    var SHEET_ENDPOINT = '';   // ← 여기에 Apps Script /exec URL 붙여넣기
+
     (function(){
-      var base = location.href.replace(/[?#].*$/, '').replace(/[^/]*$/, '');
-      document.getElementById('nextUrl').value = base + 'thanks.html';
+      var form    = document.getElementById('leadForm');
+      var base    = location.href.replace(/[?#].*$/, '').replace(/[^/]*$/, '');
+      var nextUrl = base + 'thanks.html';
+      document.getElementById('nextUrl').value = nextUrl;   // 이메일 방식 redirect용
+
+      /* 구글 시트 방식이 설정돼 있으면 가로채서 시트로 전송 후 thank-you 이동 */
+      if (/\/exec\b/.test(SHEET_ENDPOINT)) {
+        form.addEventListener('submit', function(ev){
+          ev.preventDefault();
+          var btn = form.querySelector('button[type=submit]');
+          btn.disabled = true; btn.textContent = '전송 중…';
+          fetch(SHEET_ENDPOINT, { method:'POST', mode:'no-cors', body:new FormData(form) })
+            .then(function(){ location.href = nextUrl; })
+            .catch(function(){ location.href = nextUrl; });
+        });
+      }
+      /* 미설정 시: 폼이 그대로 formsubmit 으로 제출(이메일) → _next 로 thank-you 이동 */
     })();
   </script>
 </body>
