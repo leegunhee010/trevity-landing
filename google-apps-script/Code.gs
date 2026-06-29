@@ -23,8 +23,8 @@ var SENDER_NAME   = '트래비티 (Trevity)';                 // 신청자에게
        '다른 주소에서 메일 보내기'에 그 주소를 SMTP(smtp.worksmobile.com:587)로
        등록·인증한 뒤, 여기에 그 주소를 적기. (비워두면 기본 구글 계정으로 발송)
    ------------------------------------------------------------------- */
-var REPLY_TO   = 'meeneex2@gmail.com';                    // 예: 'info@회사.도메인' (네이버 웍스)
-var FROM_ALIAS = '';                                       // 예: 'info@회사.도메인' (Gmail에 등록·인증된 경우만)
+var REPLY_TO   = 'notice@trevity.com';                    // 네이버 웍스 — 답장은 항상 여기로 (별칭 등록 전에도 적용)
+var FROM_ALIAS = 'notice@trevity.com';                    // 네이버 웍스 — Gmail '다른 주소에서 보내기'에 등록·인증되면 발신주소로 적용
 
 var LANDING_URL   = 'https://leegunhee010.github.io/trevity-landing/';
 
