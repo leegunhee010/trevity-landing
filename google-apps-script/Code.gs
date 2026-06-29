@@ -14,8 +14,18 @@
    ===================================================================== */
 
 var SHEET_NAME    = '신청';
-var NOTIFY_EMAIL  = 'meeneex2@gmail.com';                 // 사장님(알림 받을 곳, 답장 주소)
+var NOTIFY_EMAIL  = 'meeneex2@gmail.com';                 // 사장님(신청 알림 받을 곳)
 var SENDER_NAME   = '트래비티 (Trevity)';                 // 신청자에게 보일 발신자 이름
+
+/* 발신/답장 주소 설정 ───────────────────────────────────────────────
+   - REPLY_TO  : 신청자가 '답장'하면 들어올 주소. 네이버 웍스 주소로 바꿔도 됨.
+   - FROM_ALIAS: 실제 '보낸사람' 주소. 네이버 웍스로 보내려면 → 먼저 Gmail 설정의
+       '다른 주소에서 메일 보내기'에 그 주소를 SMTP(smtp.worksmobile.com:587)로
+       등록·인증한 뒤, 여기에 그 주소를 적기. (비워두면 기본 구글 계정으로 발송)
+   ------------------------------------------------------------------- */
+var REPLY_TO   = 'meeneex2@gmail.com';                    // 예: 'info@회사.도메인' (네이버 웍스)
+var FROM_ALIAS = '';                                       // 예: 'info@회사.도메인' (Gmail에 등록·인증된 경우만)
+
 var LANDING_URL   = 'https://leegunhee010.github.io/trevity-landing/';
 
 /* 비법서 PDF 출처 — 둘 중 하나만 있으면 됨 (URL 우선) */
@@ -125,15 +135,14 @@ function sendEbook_(p){
       '읽어보시고 우리 매장 적용이 궁금하시면 이 메일에 회신해 주세요 — 무료로 KOC 전략을 진단해 드립니다.\n\n' +
       '트래비티 · 호치민·대구·서울\n' + LANDING_URL;
 
-    MailApp.sendEmail({
-      to: to,
-      subject: '[트래비티] 신청하신 베트남 KOC 마케팅 비법서입니다 📘',
-      body: plain,
+    var opts = {
       htmlBody: html,
       name: SENDER_NAME,
-      replyTo: NOTIFY_EMAIL,
+      replyTo: REPLY_TO || NOTIFY_EMAIL,
       attachments: [blob]
-    });
+    };
+    if(FROM_ALIAS) opts.from = FROM_ALIAS;   // Gmail에 등록·인증된 별칭(예: 네이버 웍스)만 적용됨
+    GmailApp.sendEmail(to, '[트래비티] 신청하신 베트남 KOC 마케팅 비법서입니다 📘', plain, opts);
     return true;
   }catch(err){
     return String(err);
