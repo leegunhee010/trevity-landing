@@ -170,12 +170,12 @@
         <div class="chat-or">또는 메신저로 바로 상담</div>
         <div class="chat-btns">
           <a class="cbtn kakao" href="https://pf.kakao.com/_xoJwen" target="_blank" rel="noopener"
-             onclick="if(window.fbq)fbq('track','Contact',{channel:'kakao'});">
+             onclick="if(window.fbq){fbq('track','Contact',{channel:'kakao'});fbq('track','Lead',{channel:'kakao'});}">
             <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 3C6.5 3 2 6.6 2 11c0 2.8 1.9 5.3 4.7 6.7-.2.7-.8 2.6-.9 3-.1.5.2.5.4.4.2-.1 2.6-1.8 3.7-2.5.7.1 1.4.2 2.1.2 5.5 0 10-3.6 10-8S17.5 3 12 3z"/></svg>
             카카오톡
           </a>
           <a class="cbtn zalo" href="https://zalo.me/84978999054" target="_blank" rel="noopener"
-             onclick="if(window.fbq)fbq('track','Contact',{channel:'zalo'});">
+             onclick="if(window.fbq){fbq('track','Contact',{channel:'zalo'});fbq('track','Lead',{channel:'zalo'});}">
             <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 5.94 2 10.8c0 2.77 1.46 5.24 3.74 6.86-.13.9-.6 2.2-1.2 3.13-.2.31.05.68.4.58 1.6-.44 3.2-1.16 4.02-1.6.98.24 2 .37 3.04.37 5.52 0 10-3.94 10-8.8S17.52 2 12 2z"/></svg>
             Zalo
           </a>
