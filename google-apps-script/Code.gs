@@ -24,14 +24,14 @@ var SENDER_NAME   = '트래비티 (Trevity)';                 // 신청자에게
        등록·인증한 뒤, 여기에 그 주소를 적기. (비워두면 기본 구글 계정으로 발송)
    ------------------------------------------------------------------- */
 var REPLY_TO   = 'notice@trevity.com';                    // 네이버 웍스 — 답장은 항상 여기로 (별칭 등록 전에도 적용)
-var FROM_ALIAS = 'notice@trevity.com';                    // 네이버 웍스 — Gmail '다른 주소에서 보내기'에 등록·인증되면 발신주소로 적용
+var FROM_ALIAS = '';                                       // 비움: gmail로 발송(도착률 안정). notice 주소 직접발송은 trevity.com SPF/DKIM/DMARC 인증 후 'notice@trevity.com'로 변경
 
 var LANDING_URL   = 'https://leegunhee010.github.io/trevity-landing/';
 
 /* 비법서 PDF 출처 — 둘 중 하나만 있으면 됨 (URL 우선) */
 var EBOOK_URL     = 'https://leegunhee010.github.io/trevity-landing/trevity-koc-ebook.pdf'; // ★기본: 랜딩 폴더에 PDF push 하면 끝
 var EBOOK_FILE_ID = '';                                    // (대안) 드라이브에 올렸을 때만 파일 ID 붙여넣기
-var EBOOK_FILENAME = '트래비티_베트남_KOC_마케팅_비법서.pdf';
+var EBOOK_FILENAME = 'Trevity_Vietnam_KOC_Marketing_Guide.pdf';  // 첨부파일명은 영문(ASCII)으로 — 한글 파일명은 일부 메일앱/베트남어 환경에서 ?????로 깨짐
 
 var HEADERS = ['신청일시','이름','매장명','업종','전화번호','이메일','추가내용','비법서발송'];
 
@@ -118,7 +118,7 @@ function sendEbook_(p){
         '<div style="border:1px solid #e7ddef;border-top:0;border-radius:0 0 14px 14px;padding:26px 24px">' +
           '<p>' + escapeHtml_(name) + ' 사장님, 안녕하세요. 트래비티입니다.</p>' +
           '<p>신청해 주셔서 감사합니다. 요청하신 <b>「사장님을 위한 베트남 KOC 마케팅 비법서」</b>를 ' +
-            '이 메일에 <b>PDF로 첨부</b>해 보내드립니다. 📘</p>' +
+            '이 메일에 <b>PDF로 첨부</b>해 보내드립니다.</p>' +
           '<p style="background:#f5ecfb;border-left:4px solid #a23ad1;padding:12px 16px;border-radius:6px;margin:18px 0">' +
             '틱톡·KOC가 왜 베트남에서 강한지, 어떤 KOC를 어떻게 섭외하는지 ' +
             '— 현장에서 바로 쓰는 노하우를 한 권에 담았습니다.</p>' +
@@ -142,7 +142,7 @@ function sendEbook_(p){
       attachments: [blob]
     };
     if(FROM_ALIAS) opts.from = FROM_ALIAS;   // Gmail에 등록·인증된 별칭(예: 네이버 웍스)만 적용됨
-    GmailApp.sendEmail(to, '[트래비티] 신청하신 베트남 KOC 마케팅 비법서입니다 📘', plain, opts);
+    GmailApp.sendEmail(to, '[트래비티] 신청하신 베트남 KOC 마케팅 비법서입니다', plain, opts);
     return true;
   }catch(err){
     return String(err);
